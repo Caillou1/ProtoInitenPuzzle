@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SoundEmitter : MonoBehaviour {
     public AudioClip Sound;
+    public Material Mat;
 
     private AudioSource source;
     private Transform tf;
@@ -22,8 +23,48 @@ public class SoundEmitter : MonoBehaviour {
 
         if(distance <= portee)
         {
-            source.PlayOneShot(Sound, distance/portee);
-            Player.Instance.SetDestination(tf.position);
+            var hits = Physics.RaycastAll(tf.position, (Player.Instance.GetPosition() - tf.position).normalized);
+            bool canPlaySound = true;
+
+            foreach(var hit in hits)
+            {
+                if(hit.collider.CompareTag("Wall"))
+                {
+                    canPlaySound = false;
+                    break;
+                }
+            }
+
+            if (canPlaySound)
+            {
+                source.PlayOneShot(Sound, 1 - (distance / portee));
+                Player.Instance.SetDestination(tf.position);
+            }
+        }
+
+        var others = Physics.OverlapSphere(tf.position, portee);
+
+        foreach(var other in others)
+        {
+            if(other.CompareTag("Animal"))
+            {
+                var hits = Physics.RaycastAll(tf.position, (Player.Instance.GetPosition() - tf.position).normalized);
+                bool canPlaySound = true;
+
+                foreach (var hit in hits)
+                {
+                    if (hit.collider.CompareTag("Wall"))
+                    {
+                        canPlaySound = false;
+                        break;
+                    }
+                }
+
+                if (canPlaySound)
+                {
+                    other.GetComponent<Animal>().SetDestination(tf.position);
+                }
+            }
         }
     }
 }
