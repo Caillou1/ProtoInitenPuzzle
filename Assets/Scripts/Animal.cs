@@ -15,4 +15,12 @@ public class Animal : MonoBehaviour {
     {
         navMeshAgent.SetDestination(Destination);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            navMeshAgent.SetDestination(Player.Instance.GetPosition());
+        }
+    }
 }
