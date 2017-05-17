@@ -26,6 +26,25 @@ public class SoundEmitter : MonoBehaviour {
         return tf.position;
     }
 
+    public bool CanReachPlayer()
+    {
+        float distance = Vector3.Distance(tf.position, Player.Instance.GetPosition());
+
+        var hits = Physics.RaycastAll(tf.position, (Player.Instance.GetPosition() - tf.position).normalized, distance);
+        bool canReach = true;
+
+        foreach (var hit in hits)
+        {
+            if (hit.collider.CompareTag("Wall"))
+            {
+                canReach = false;
+                break;
+            }
+        }
+
+        return canReach;
+    }
+
     public void PlaySound(AudioClip Sound, bool IsClosestToPlayer)
     {
         if (IsClosestToPlayer)

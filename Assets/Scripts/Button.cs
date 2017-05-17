@@ -35,7 +35,7 @@ public class Button : MonoBehaviour {
         for(int i = 0; i < LinkedSoundEmitters.Length; i++)
         {
             float dist = Vector3.Distance(LinkedSoundEmitters[i].GetPosition(), Player.Instance.GetPosition());
-            if(dist < shortest)
+            if(dist < shortest && LinkedSoundEmitters[i].CanReachPlayer())
             {
                 index = i;
                 shortest = dist;
