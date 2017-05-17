@@ -21,28 +21,36 @@ public class SoundEmitter : MonoBehaviour {
         GetComponent<MeshRenderer>().material = m;
     }
 
-    public void PlaySound(AudioClip Sound)
+    public Vector3 GetPosition()
     {
-        float distance = Vector3.Distance(tf.position, Player.Instance.GetPosition());
+        return tf.position;
+    }
 
-        if(distance <= portee)
+    public void PlaySound(AudioClip Sound, bool IsClosestToPlayer)
+    {
+        if (IsClosestToPlayer)
         {
-            var hits = Physics.RaycastAll(tf.position, (Player.Instance.GetPosition() - tf.position).normalized, distance);
-            bool canPlaySound = true;
+            float distance = Vector3.Distance(tf.position, Player.Instance.GetPosition());
 
-            foreach(var hit in hits)
+            if (distance <= portee)
             {
-                if(hit.collider.CompareTag("Wall"))
+                var hits = Physics.RaycastAll(tf.position, (Player.Instance.GetPosition() - tf.position).normalized, distance);
+                bool canPlaySound = true;
+
+                foreach (var hit in hits)
                 {
-                    canPlaySound = false;
-                    break;
+                    if (hit.collider.CompareTag("Wall"))
+                    {
+                        canPlaySound = false;
+                        break;
+                    }
                 }
-            }
 
-            if (canPlaySound)
-            {
-                source.PlayOneShot(Sound, 1 - (distance / portee));
-                Player.Instance.SetDestination(tf.position);
+                if (canPlaySound)
+                {
+                    source.PlayOneShot(Sound, 1 - (distance / portee));
+                    Player.Instance.SetDestination(tf.position);
+                }
             }
         }
 

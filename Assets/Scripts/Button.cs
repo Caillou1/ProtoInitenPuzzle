@@ -16,9 +16,32 @@ public class Button : MonoBehaviour {
 
     public void PlaySoundAtEmitters()
     {
-        foreach(var emitter in LinkedSoundEmitters)
+        int ShortestIndex = FindShortestIndex();
+
+        for(int i = 0; i<LinkedSoundEmitters.Length; i++)
         {
-            emitter.PlaySound(SoundToPlay);
+            if (i == ShortestIndex)
+                LinkedSoundEmitters[i].PlaySound(SoundToPlay, true);
+            else
+                LinkedSoundEmitters[i].PlaySound(SoundToPlay, false);
         }
+    }
+
+    public int FindShortestIndex()
+    {
+        int index = -1;
+        float shortest = 99999;
+
+        for(int i = 0; i < LinkedSoundEmitters.Length; i++)
+        {
+            float dist = Vector3.Distance(LinkedSoundEmitters[i].GetPosition(), Player.Instance.GetPosition());
+            if(dist < shortest)
+            {
+                index = i;
+                shortest = dist;
+            }
+        }
+
+        return index;
     }
 }
