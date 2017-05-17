@@ -7,7 +7,7 @@ public class Objectif : MonoBehaviour {
     {
         if(other.CompareTag("Player"))
         {
-            Debug.Log("Win");
+            LevelManager.Instance.Win();
         }
     }
 }
