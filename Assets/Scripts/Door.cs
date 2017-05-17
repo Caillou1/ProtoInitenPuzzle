@@ -6,11 +6,14 @@ public class Door : MonoBehaviour {
     private List<PressurePlate> pressurePlates;
 
 	void Start () {
-        pressurePlates = new List<PressurePlate>();
-	}
+        if (pressurePlates == null)
+            pressurePlates = new List<PressurePlate>();
+    }
 
     public void Register(PressurePlate pp)
     {
+        if(pressurePlates == null)
+            pressurePlates = new List<PressurePlate>();
         pressurePlates.Add(pp);
     }
 

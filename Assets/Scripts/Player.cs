@@ -26,4 +26,15 @@ public class Player : MonoBehaviour {
     {
         return tf.position;
     }
+
+    public void Kill()
+    {
+        StartCoroutine(DelayedReset());
+    }
+
+    private IEnumerator DelayedReset()
+    {
+        yield return new WaitForSeconds(5);
+        LevelManager.Instance.Lose();
+    }
 }

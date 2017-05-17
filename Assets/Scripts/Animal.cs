@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Animal : MonoBehaviour {
+    public bool ChasePlayer;
+
     private NavMeshAgent navMeshAgent;
 
     void Start()
@@ -18,7 +20,7 @@ public class Animal : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (ChasePlayer && other.CompareTag("Player"))
         {
             navMeshAgent.SetDestination(Player.Instance.GetPosition());
         }

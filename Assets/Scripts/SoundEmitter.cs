@@ -42,7 +42,7 @@ public class SoundEmitter : MonoBehaviour {
             }
         }
 
-        return canReach;
+        return canReach && (distance <= portee);
     }
 
     public void PlaySound(AudioClip Sound, bool IsClosestToPlayer)
@@ -79,13 +79,14 @@ public class SoundEmitter : MonoBehaviour {
         {
             if(other.CompareTag("Animal"))
             {
-                var hits = Physics.RaycastAll(tf.position, (Player.Instance.GetPosition() - tf.position).normalized, Vector3.Distance(tf.position, other.transform.position));
+                var hits = Physics.RaycastAll(tf.position, (other.transform.position - tf.position).normalized, Vector3.Distance(tf.position, other.transform.position));
                 bool canPlaySound = true;
 
                 foreach (var hit in hits)
                 {
                     if (hit.collider.CompareTag("Wall"))
                     {
+                        Debug.Log("found wall " + hit.collider.gameObject.name);
                         canPlaySound = false;
                         break;
                     }
@@ -93,6 +94,7 @@ public class SoundEmitter : MonoBehaviour {
 
                 if (canPlaySound)
                 {
+                    Debug.Log(gameObject.name + " called Animal");
                     other.GetComponent<Animal>().SetDestination(tf.position);
                 }
             }

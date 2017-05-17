@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PressurePlate : MonoBehaviour {
-    public Door LinkedDoor;
+    public Door[] LinkedDoor;
     public bool CanBeTriggeredByAnimals;
 
     public bool IsTriggered {
@@ -16,17 +16,23 @@ public class PressurePlate : MonoBehaviour {
     private bool triggered;
 
 	void Start () {
-        LinkedDoor.Register(this);
+        foreach (var d in LinkedDoor)
+        {
+            d.Register(this);
+        }
 
         triggered = false;
 	}
 
     private void Trigger()
     {
-        if (LinkedDoor != null)
+        foreach (var d in LinkedDoor)
         {
-            triggered = true;
-            LinkedDoor.CheckOpenable();
+            if (d != null)
+            {
+                triggered = true;
+                d.CheckOpenable();
+            }
         }
     }
 

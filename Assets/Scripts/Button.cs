@@ -7,12 +7,13 @@ public class Button : MonoBehaviour {
     public AudioClip SoundToPlay;
     public Material Mat;
 
-	void Start () {
-		foreach(var emitter in LinkedSoundEmitters)
+    public void SetMaterials()
+    {
+        foreach (var emitter in LinkedSoundEmitters)
         {
             emitter.SetMaterial(Mat);
         }
-	}
+    }
 
     public void PlaySoundAtEmitters()
     {
@@ -41,7 +42,6 @@ public class Button : MonoBehaviour {
                 shortest = dist;
             }
         }
-
         return index;
     }
 }
