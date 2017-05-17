@@ -24,7 +24,8 @@ public class PressurePlate : MonoBehaviour {
     private void Trigger()
     {
         triggered = true;
-        LinkedDoor.CheckOpenable();
+        if(LinkedDoor!=null)
+            LinkedDoor.CheckOpenable();
     }
 
     private void OnTriggerEnter(Collider other)
