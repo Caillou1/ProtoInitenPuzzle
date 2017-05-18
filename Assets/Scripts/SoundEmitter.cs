@@ -86,7 +86,6 @@ public class SoundEmitter : MonoBehaviour {
                 {
                     if (hit.collider.CompareTag("Wall"))
                     {
-                        Debug.Log("found wall " + hit.collider.gameObject.name);
                         canPlaySound = false;
                         break;
                     }
@@ -94,7 +93,6 @@ public class SoundEmitter : MonoBehaviour {
 
                 if (canPlaySound)
                 {
-                    Debug.Log(gameObject.name + " called Animal");
                     other.GetComponent<Animal>().SetDestination(tf.position);
                 }
             }
