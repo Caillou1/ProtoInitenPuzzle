@@ -30,6 +30,11 @@ public class SaveManager : MonoBehaviour {
         }
     }
 
+    public Material GetMat(AudioClip Sound)
+    {
+        return AssociatedMaterials[FindIndex(Sound)];
+    }
+
     public bool IsSet(AudioClip Sound)
     {
         return AssociatedMaterials[FindIndex(Sound)] != null;

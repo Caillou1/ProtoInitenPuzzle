@@ -14,17 +14,35 @@ public class AssociationManager : MonoBehaviour {
     public float launchDelay;
     public float rotationSpeed;
     public int sphereDisplayed;
-    private Button [] soundButtons;
+    private List<Button> soundButtons;
     List<GameObject> spheres = new List<GameObject>();
     AudioSource source;
     int index;
 
     void Start () {
-        soundButtons = GameObject.FindObjectsOfType<Button>();
+        soundButtons = ButtonArrayToList(GameObject.FindObjectsOfType<Button>());
         source = GetComponent<AudioSource>();
         index = 0;
         Invoke("SetUp", 1f);
         CamAssociation.GetChild(0).position += new Vector3(0, 0, distFromCam);
+    }
+
+    private List<Button> ButtonArrayToList(Button[] tab)
+    {
+        List<Button> liste = new List<Button>();
+
+        foreach(var b in tab)
+        {
+            if(SaveManager.Instance.IsSet(b.SoundToPlay))
+            {
+                liste.Add(b);
+            } else
+            {
+                b.Mat = SaveManager.Instance.GetMat(b.SoundToPlay);
+            }
+        }
+
+        return liste;
     }
 
     public void Associate(Material m, int pos, GameObject go)
@@ -33,10 +51,10 @@ public class AssociationManager : MonoBehaviour {
         index++;
         spheres.Remove(go);
 
-        if (index == soundButtons.Length)
+        if (index == soundButtons.Count)
             FinishAssociation();
 
-        if (index < soundButtons.Length)
+        if (index < soundButtons.Count)
         {
             Invoke("PlaySound", 1f);
             if (Initen.Count > 0)
