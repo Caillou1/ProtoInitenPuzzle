@@ -15,6 +15,7 @@ public class AssociationManager : MonoBehaviour {
     public float rotationSpeed;
     public int sphereDisplayed;
     private Button [] soundButtons;
+    List<GameObject> spheres = new List<GameObject>();
     AudioSource source;
     int index;
 
@@ -26,17 +27,22 @@ public class AssociationManager : MonoBehaviour {
         CamAssociation.GetChild(0).position += new Vector3(0, 0, distFromCam);
     }
 
-    public void Associate(Material m, int pos)
+    public void Associate(Material m, int pos, GameObject go)
     {
         soundButtons[index].Mat = m;
         index++;
+        spheres.Remove(go);
 
         if (index == soundButtons.Length)
-            EndAssociation();
+            FinishAssociation();
 
-        if (Initen.Count > 0)
-            SpawnIniten(pos, 0f);
-        Invoke("PlaySound", 1f);
+        if (index < soundButtons.Length)
+        {
+            Invoke("PlaySound", 1f);
+            if (Initen.Count > 0)
+                SpawnIniten(pos, 0f);
+        }
+        
     }
 
     void SetUp()
@@ -64,6 +70,7 @@ public class AssociationManager : MonoBehaviour {
         clone.transform.DOLocalMove(CamAssociation.GetChild(0).InverseTransformDirection(clone.transform.up) * distFromCenter, 3f).SetEase(Ease.OutElastic, 1f).SetDelay(delay);
         clone.transform.localScale = Vector3.zero;
         clone.transform.DOScale(sphereSize, 1f).SetDelay(delay);
+        spheres.Add(clone);
     }
 
     void PlaySound () {
@@ -71,13 +78,23 @@ public class AssociationManager : MonoBehaviour {
             source.PlayOneShot(soundButtons[index].SoundToPlay);
 	}
 
-    void EndAssociation()
+    void FinishAssociation() // Tout le code de fin de phase
     {
-        gameObject.SetActive(false);
         foreach (Button btn in soundButtons)
         {
             btn.SetMaterials();
         }
+
+        foreach (GameObject go in spheres)
+        {
+            go.transform.DOLocalMove(Vector3.zero, 1f).SetEase(Ease.InBack).OnComplete(EndAssociation);
+            go.transform.DOScale(0f, 0.9f).SetEase(Ease.InSine);
+        }
+    }
+
+    void EndAssociation()  // Après FinishAssociation, quand toutes les anims sont finies
+    {
         LevelManager.Instance.StartChrono();
+        gameObject.SetActive(false);
     }
 }
