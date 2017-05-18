@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class AssociationManager : MonoBehaviour {
 
-    private List<Material> Initen;
+    private List<Material> Initen = new List<Material>();
     public GameObject BaseIniten;
     public Transform CamAssociation;
     public float distFromCam;
@@ -26,14 +26,23 @@ public class AssociationManager : MonoBehaviour {
     AudioSource source;
     int index;
 
-    void Start () {
+    void Start()
+    {
         var tab = GameObject.FindObjectsOfType<Button>();
         soundButtons = ButtonArrayToList(tab);
+
+        if (soundButtons.Count == 0)
+            SkipAssociation();
+
         source = GetComponent<AudioSource>();
         index = 0;
         Invoke("SetUp", 1f);
         CamAssociation.GetChild(0).position += new Vector3(0, 0, distFromCam);
-        Initen = SaveManager.Instance.AvailableInitens;
+
+        foreach (Material m in SaveManager.Instance.AvailableInitens)
+        {
+            Initen.Add(m);
+        }
     }
 
     private List<Button> ButtonArrayToList(Button[] tab)
@@ -71,11 +80,12 @@ public class AssociationManager : MonoBehaviour {
             if (Initen.Count > 0)
                 SpawnIniten(pos, 0f);
         }
-        
     }
 
     void SetUp()
     {
+        mainSoundButton.SetActive(true);
+
         for (int i = 0; i < sphereDisplayed; i++)
         {
             if (Initen.Count <= 0)
@@ -116,10 +126,17 @@ public class AssociationManager : MonoBehaviour {
 
         foreach (GameObject go in spheres)
         {
+            go.GetComponent<InitenClick>().beingKilled = true;
             go.transform.DOLocalMove(Vector3.zero, 1f).SetEase(Ease.InBack);
             go.transform.DOScale(0f, 0.9f).SetEase(Ease.InSine);
         }
 
+        mainSoundButton.transform.DOScale(0f, 0.7f).SetEase(Ease.InSine).SetDelay(0.2f);
+        Invoke("EndAssociation", 1f);
+    }
+
+    void SkipAssociation()
+    {
         mainSoundButton.transform.DOScale(0f, 0.7f).SetEase(Ease.InSine).SetDelay(0.2f);
         Invoke("EndAssociation", 1f);
     }
