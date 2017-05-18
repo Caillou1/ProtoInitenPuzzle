@@ -30,6 +30,9 @@ public class Button : MonoBehaviour {
             else
                 LinkedSoundEmitters[i].PlaySound(SoundToPlay, false);
         }
+
+        if (ShortestIndex == -1)
+            Player.Instance.CanHearSound(false);
     }
 
     public void TestSound()

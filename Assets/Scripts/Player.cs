@@ -61,7 +61,7 @@ public class Player : MonoBehaviour {
 
     IEnumerator DelayedDesactivate(GameObject obj)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         obj.SetActive(false);
     }
 }
