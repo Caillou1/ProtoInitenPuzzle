@@ -18,6 +18,8 @@ public class SaveManager : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        InitTab();
+
         DontDestroyOnLoad(gameObject);
 	}
 
@@ -46,7 +48,7 @@ public class SaveManager : MonoBehaviour {
 
         for (int i = 0; i < AvailableSounds.Length; i++)
         {
-            if (AvailableSounds[i] == Sound)
+            if (AvailableSounds[i].name == Sound.name)
             {
                 index = i;
                 break;
