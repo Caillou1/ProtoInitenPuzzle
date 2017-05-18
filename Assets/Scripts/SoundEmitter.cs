@@ -19,7 +19,8 @@ public class SoundEmitter : MonoBehaviour {
 
     public void SetMaterial(Material m)
     {
-        GetComponent<MeshRenderer>().material = m;
+        transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = m;
+        GetComponent<MeshRenderer>().enabled = false;
     }
 
     public Vector3 GetPosition()
