@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Door : MonoBehaviour {
     private List<PressurePlate> pressurePlates;
@@ -40,12 +41,14 @@ public class Door : MonoBehaviour {
     {
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
+        GetComponent<NavMeshObstacle>().enabled = false;
     }
 
     public void Close()
     {
         GetComponent<MeshRenderer>().enabled = true;
         GetComponent<Collider>().enabled = true;
+        GetComponent<NavMeshObstacle>().enabled = true;
     }
 
     public void CheckClosable()

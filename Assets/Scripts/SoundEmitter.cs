@@ -45,6 +45,11 @@ public class SoundEmitter : MonoBehaviour {
         return canReach && (distance <= portee);
     }
 
+    public void TestSound(AudioClip Sound)
+    {
+        source.PlayOneShot(Sound, 1);
+    }
+
     public void PlaySound(AudioClip Sound, bool IsClosestToPlayer)
     {
         if (IsClosestToPlayer)
@@ -67,7 +72,8 @@ public class SoundEmitter : MonoBehaviour {
 
                 if (canPlaySound)
                 {
-                    source.PlayOneShot(Sound, 1 - (distance / portee));
+                    float soundVolume = 1 - (distance / portee);
+                    source.PlayOneShot(Sound, soundVolume);
                     Player.Instance.SetDestination(tf.position);
                 }
             }
