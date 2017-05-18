@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Door : MonoBehaviour {
     private List<PressurePlate> pressurePlates;
@@ -32,7 +33,40 @@ public class Door : MonoBehaviour {
 
         if(canOpen)
         {
-            Destroy(gameObject);
+            Open();
+        }
+    }
+
+    public void Open()
+    {
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+        GetComponent<NavMeshObstacle>().enabled = false;
+    }
+
+    public void Close()
+    {
+        GetComponent<MeshRenderer>().enabled = true;
+        GetComponent<Collider>().enabled = true;
+        GetComponent<NavMeshObstacle>().enabled = true;
+    }
+
+    public void CheckClosable()
+    {
+        bool canClose = true;
+
+        foreach (var p in pressurePlates)
+        {
+            if (!p.IsTriggered)
+            {
+                canClose = false;
+                break;
+            }
+        }
+
+        if (canClose)
+        {
+            Close();
         }
     }
 }

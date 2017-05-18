@@ -14,10 +14,9 @@ public class LevelManager : MonoBehaviour {
 
 	void Start () {
         Instance = this;
-        StartChrono();
 	}
 
-    private void StartChrono()
+    public void StartChrono()
     {
         startTime = Time.time;
     }

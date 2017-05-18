@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PressurePlate : MonoBehaviour {
-    public Door[] LinkedDoor;
+    public Door[] LinkedDoors;
     public bool CanBeTriggeredByAnimals;
+    public bool CloseDoor;
 
     public bool IsTriggered {
         get
@@ -16,9 +17,13 @@ public class PressurePlate : MonoBehaviour {
     private bool triggered;
 
 	void Start () {
-        foreach (var d in LinkedDoor)
+        foreach (var d in LinkedDoors)
         {
             d.Register(this);
+            if(CloseDoor)
+            {
+                d.Open();
+            }
         }
 
         triggered = false;
@@ -26,12 +31,15 @@ public class PressurePlate : MonoBehaviour {
 
     private void Trigger()
     {
-        foreach (var d in LinkedDoor)
+        foreach (var d in LinkedDoors)
         {
             if (d != null)
             {
                 triggered = true;
-                d.CheckOpenable();
+                if (CloseDoor)
+                    d.CheckClosable();
+                else
+                    d.CheckOpenable();
             }
         }
     }

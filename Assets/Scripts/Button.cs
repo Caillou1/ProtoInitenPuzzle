@@ -28,6 +28,11 @@ public class Button : MonoBehaviour {
         }
     }
 
+    public void TestSound()
+    {
+        SoundManager.Instance.TestSound(SoundToPlay);
+    }
+
     public int FindShortestIndex()
     {
         int index = -1;

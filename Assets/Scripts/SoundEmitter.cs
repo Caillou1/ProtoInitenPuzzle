@@ -14,6 +14,7 @@ public class SoundEmitter : MonoBehaviour {
         source = GetComponent<AudioSource>();
         tf = transform;
         portee = GetComponent<SphereCollider>().radius;
+        source.maxDistance = portee;
     }
 
     public void SetMaterial(Material m)
@@ -67,7 +68,7 @@ public class SoundEmitter : MonoBehaviour {
 
                 if (canPlaySound)
                 {
-                    source.PlayOneShot(Sound, 1 - (distance / portee));
+                    source.PlayOneShot(Sound);
                     Player.Instance.SetDestination(tf.position);
                 }
             }

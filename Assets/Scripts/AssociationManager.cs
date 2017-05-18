@@ -68,8 +68,8 @@ public class AssociationManager : MonoBehaviour {
     }
 
     void PlaySound () {
-        if (soundButtons[0].SoundToPlay != null)
-            source.PlayOneShot(soundButtons[0].SoundToPlay);
+        if (soundButtons[index].SoundToPlay != null)
+            source.PlayOneShot(soundButtons[index].SoundToPlay);
 	}
 
     void EndAssociation()
@@ -79,5 +79,6 @@ public class AssociationManager : MonoBehaviour {
         {
             btn.SetMaterials();
         }
+        LevelManager.Instance.StartChrono();
     }
 }
