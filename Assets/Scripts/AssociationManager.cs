@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class AssociationManager : MonoBehaviour {
 
-    private List<Material> Initen;
+    private List<Material> Initen = new List<Material>();
     public GameObject BaseIniten;
     public Transform CamAssociation;
     public float distFromCam;
@@ -26,14 +26,19 @@ public class AssociationManager : MonoBehaviour {
     AudioSource source;
     int index;
 
-    void Start () {
+    void Start()
+    {
         var tab = GameObject.FindObjectsOfType<Button>();
         soundButtons = ButtonArrayToList(tab);
         source = GetComponent<AudioSource>();
         index = 0;
         Invoke("SetUp", 1f);
         CamAssociation.GetChild(0).position += new Vector3(0, 0, distFromCam);
-        Initen = SaveManager.Instance.AvailableInitens;
+
+        foreach (Material m in SaveManager.Instance.AvailableInitens)
+        {
+            Initen.Add(m);
+        }
     }
 
     private List<Button> ButtonArrayToList(Button[] tab)
@@ -71,7 +76,6 @@ public class AssociationManager : MonoBehaviour {
             if (Initen.Count > 0)
                 SpawnIniten(pos, 0f);
         }
-        
     }
 
     void SetUp()
@@ -128,6 +132,6 @@ public class AssociationManager : MonoBehaviour {
     {
         gameObject.SetActive(false);
         canvaGroup.alpha = 1f;
-        background.DOFade(0f, 2f).SetEase(Ease.OutSine).OnComplete(LevelManager.Instance.StartChrono);
+        background.DOFade(0f, 2f).SetEase(Ease.OutSine);
     }
 }

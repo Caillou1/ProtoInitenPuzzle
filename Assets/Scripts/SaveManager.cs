@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour {
     public List<Material> AvailableInitens;
+    public List<Material> MonolithInitens;
     public AudioClip[] AvailableSounds;
     public Sprite[] AvailableButtons;
 
@@ -67,7 +68,10 @@ public class SaveManager : MonoBehaviour {
 
     public void SetMaterial(AudioClip Sound, Material Mat)
     {
-        AssociatedMaterials[FindIndex(Sound)] = Mat;
+        int index = AvailableInitens.IndexOf(Mat);
+        Material monoMat = MonolithInitens[index];
+        AssociatedMaterials[FindIndex(Sound)] = monoMat;
         AvailableInitens.Remove(Mat);
+        MonolithInitens.Remove(monoMat);
     }
 }
