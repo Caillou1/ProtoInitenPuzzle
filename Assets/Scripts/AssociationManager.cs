@@ -20,7 +20,8 @@ public class AssociationManager : MonoBehaviour {
     int index;
 
     void Start () {
-        soundButtons = ButtonArrayToList(GameObject.FindObjectsOfType<Button>());
+        var tab = GameObject.FindObjectsOfType<Button>();
+        soundButtons = ButtonArrayToList(tab);
         source = GetComponent<AudioSource>();
         index = 0;
         Invoke("SetUp", 1f);
@@ -33,7 +34,7 @@ public class AssociationManager : MonoBehaviour {
 
         foreach(var b in tab)
         {
-            if(SaveManager.Instance.IsSet(b.SoundToPlay))
+            if(!SaveManager.Instance.IsSet(b.SoundToPlay))
             {
                 liste.Add(b);
             } else
@@ -53,7 +54,6 @@ public class AssociationManager : MonoBehaviour {
 
         if (index == soundButtons.Count)
             FinishAssociation();
-
         if (index < soundButtons.Count)
         {
             Invoke("PlaySound", 1f);
@@ -92,7 +92,7 @@ public class AssociationManager : MonoBehaviour {
     }
 
     void PlaySound () {
-        if (soundButtons[index].SoundToPlay != null)
+        if (index < soundButtons.Count && soundButtons[index].SoundToPlay != null)
             source.PlayOneShot(soundButtons[index].SoundToPlay);
 	}
 
