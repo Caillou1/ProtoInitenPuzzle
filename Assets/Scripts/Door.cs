@@ -39,14 +39,14 @@ public class Door : MonoBehaviour {
 
     public void Open()
     {
-        GetComponent<MeshRenderer>().enabled = false;
+        transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
         GetComponent<NavMeshObstacle>().enabled = false;
     }
 
     public void Close()
     {
-        GetComponent<MeshRenderer>().enabled = true;
+        transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
         GetComponent<Collider>().enabled = true;
         GetComponent<NavMeshObstacle>().enabled = true;
     }
