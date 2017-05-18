@@ -29,10 +29,14 @@ public class AssociationManager : MonoBehaviour {
     void Start()
     {
         var tab = GameObject.FindObjectsOfType<Button>();
-        soundButtons = ButtonArrayToList(tab);
+
+        soundButtons = ButtonArrayToList(tab, false);
 
         if (soundButtons.Count == 0)
+        {
+            soundButtons = ButtonArrayToList(tab, true);
             SkipAssociation();
+        }
 
         source = GetComponent<AudioSource>();
         index = 0;
@@ -45,13 +49,13 @@ public class AssociationManager : MonoBehaviour {
         }
     }
 
-    private List<Button> ButtonArrayToList(Button[] tab)
+    private List<Button> ButtonArrayToList(Button[] tab, bool isSkipping)
     {
         List<Button> liste = new List<Button>();
 
         foreach(var b in tab)
         {
-            if(!SaveManager.Instance.IsSet(b.SoundToPlay))
+            if(isSkipping || !SaveManager.Instance.IsSet(b.SoundToPlay))
             {
                 liste.Add(b);
             } else
@@ -84,7 +88,7 @@ public class AssociationManager : MonoBehaviour {
 
     void SetUp()
     {
-        mainSoundButton.SetActive(true);
+        mainSoundButton.transform.parent.gameObject.SetActive(true);
 
         for (int i = 0; i < sphereDisplayed; i++)
         {
