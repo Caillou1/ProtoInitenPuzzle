@@ -128,6 +128,6 @@ public class AssociationManager : MonoBehaviour {
     {
         gameObject.SetActive(false);
         canvaGroup.alpha = 1f;
-        background.DOFade(0f, 2f).SetEase(Ease.OutSine).OnComplete(LevelManager.Instance.StartChrono);
+        background.DOFade(0f, 2f).SetEase(Ease.OutSine);
     }
 }
