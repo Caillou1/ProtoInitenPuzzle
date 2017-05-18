@@ -68,7 +68,7 @@ public class AssociationManager : MonoBehaviour {
     }
 
     void PlaySound () {
-        if (soundButtons[0].SoundToPlay != null)
+        if (soundButtons[index].SoundToPlay != null)
             source.PlayOneShot(soundButtons[0].SoundToPlay);
 	}
 
