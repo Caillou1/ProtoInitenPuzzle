@@ -2,47 +2,69 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
-    public float Time1Star;
-    public float Time2Stars;
-    public float Time3Stars;
+    public int Coup1Star;
+    public int Coup2Stars;
+    public int Coup3Stars;
 
-    private float startTime;
+    public Sprite YellowStar;
+
+    private int coups;
+
+    private GameObject EndMenu;
+    private Text NbCoups;
+    private Image[] Stars;
 
     public static LevelManager Instance;
 
 	void Start () {
         Instance = this;
-	}
+        coups = 0;
 
-    public void StartChrono()
-    {
-        startTime = Time.time;
+        EndMenu = GameObject.Find("EndMenu").gameObject;
+        NbCoups = GameObject.Find("NbCoups").GetComponent<Text>();
+
+        Stars = new Image[3];
+        Stars[0] = GameObject.Find("Star1").GetComponent<Image>();
+        Stars[1] = GameObject.Find("Star2").GetComponent<Image>();
+        Stars[2] = GameObject.Find("Star3").GetComponent<Image>();
+        EndMenu.SetActive(false);
     }
 
     public void Win()
     {
         int nbStars = 0;
-        float time = Time.time - startTime;
 
-        if(time <= Time3Stars)
+        if(coups <= Coup3Stars)
         {
             nbStars = 3;
-        } else if(time <= Time2Stars)
+        } else if(coups <= Coup2Stars)
         {
             nbStars = 2;
-        } else if(time <= Time1Star)
+        } else if(coups <= Coup1Star)
         {
             nbStars = 1;
         }
 
-        Debug.Log("WIN " + nbStars + " STARS IN " + time + " SECONDS");
+        for(int i = 0; i<nbStars; i++)
+        {
+            Stars[i].sprite = YellowStar;
+        }
+
+        NbCoups.text = "Coups : " + coups;
+
+        EndMenu.SetActive(true);
+    }
+
+    public void AddHit()
+    {
+        coups++;
     }
 
     public void Lose()
     {
-        Debug.Log("LOST");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

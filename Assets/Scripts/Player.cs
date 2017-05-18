@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
-    private GameObject CanHear;
-    private GameObject CantHear;
+    private Image CanHear;
+    private Image CantHear;
 
     private NavMeshAgent navMeshAgent;
     private Transform tf;
@@ -17,10 +18,10 @@ public class Player : MonoBehaviour {
 
         tf = transform;
 
-        CanHear = tf.FindChild("Canvas").FindChild("CanHear").gameObject;
-        CantHear = tf.FindChild("Canvas").FindChild("CantHear").gameObject;
-        CanHear.SetActive(false);
-        CantHear.SetActive(false);
+        CanHear = tf.FindChild("Canvas").FindChild("CanHear").GetComponent<Image>();
+        CantHear = tf.FindChild("Canvas").FindChild("CantHear").GetComponent<Image>();
+        //CanHear.enabled = false;
+        CantHear.enabled = false;
 
         navMeshAgent = GetComponent<NavMeshAgent>();
 	}
@@ -50,18 +51,18 @@ public class Player : MonoBehaviour {
     {
         if(b)
         {
-            CanHear.SetActive(true);
+            CanHear.enabled = true;
             StartCoroutine(DelayedDesactivate(CanHear));
         } else
         {
-            CantHear.SetActive(true);
+            CantHear.enabled = true;
             StartCoroutine(DelayedDesactivate(CantHear));
         }
     }
 
-    IEnumerator DelayedDesactivate(GameObject obj)
+    IEnumerator DelayedDesactivate(Image obj)
     {
         yield return new WaitForSeconds(1);
-        obj.SetActive(false);
+        obj.enabled = false;
     }
 }
