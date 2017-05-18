@@ -30,7 +30,7 @@ public class Button : MonoBehaviour {
 
     public void TestSound()
     {
-        LinkedSoundEmitters[0].TestSound(SoundToPlay);
+        SoundManager.Instance.TestSound(SoundToPlay);
     }
 
     public int FindShortestIndex()

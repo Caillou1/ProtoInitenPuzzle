@@ -79,5 +79,6 @@ public class AssociationManager : MonoBehaviour {
         {
             btn.SetMaterials();
         }
+        LevelManager.Instance.StartChrono();
     }
 }

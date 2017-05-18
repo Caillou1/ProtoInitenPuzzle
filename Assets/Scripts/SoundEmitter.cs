@@ -14,6 +14,7 @@ public class SoundEmitter : MonoBehaviour {
         source = GetComponent<AudioSource>();
         tf = transform;
         portee = GetComponent<SphereCollider>().radius;
+        source.maxDistance = portee;
     }
 
     public void SetMaterial(Material m)
@@ -45,11 +46,6 @@ public class SoundEmitter : MonoBehaviour {
         return canReach && (distance <= portee);
     }
 
-    public void TestSound(AudioClip Sound)
-    {
-        source.PlayOneShot(Sound, 1);
-    }
-
     public void PlaySound(AudioClip Sound, bool IsClosestToPlayer)
     {
         if (IsClosestToPlayer)
@@ -72,8 +68,7 @@ public class SoundEmitter : MonoBehaviour {
 
                 if (canPlaySound)
                 {
-                    float soundVolume = 1 - (distance / portee);
-                    source.PlayOneShot(Sound, soundVolume);
+                    source.PlayOneShot(Sound);
                     Player.Instance.SetDestination(tf.position);
                 }
             }
