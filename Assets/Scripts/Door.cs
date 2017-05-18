@@ -32,7 +32,38 @@ public class Door : MonoBehaviour {
 
         if(canOpen)
         {
-            Destroy(gameObject);
+            Open();
+        }
+    }
+
+    public void Open()
+    {
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+    }
+
+    public void Close()
+    {
+        GetComponent<MeshRenderer>().enabled = true;
+        GetComponent<Collider>().enabled = true;
+    }
+
+    public void CheckClosable()
+    {
+        bool canClose = true;
+
+        foreach (var p in pressurePlates)
+        {
+            if (!p.IsTriggered)
+            {
+                canClose = false;
+                break;
+            }
+        }
+
+        if (canClose)
+        {
+            Close();
         }
     }
 }
