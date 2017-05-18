@@ -43,7 +43,7 @@ public class Player : MonoBehaviour {
 
     private IEnumerator DelayedReset()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(0.5f);
         LevelManager.Instance.Lose();
     }
 
