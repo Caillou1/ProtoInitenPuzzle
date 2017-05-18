@@ -137,6 +137,11 @@ public class AssociationManager : MonoBehaviour {
 
     void SkipAssociation()
     {
+        foreach (Button btn in soundButtons)
+        {
+            btn.SetMaterials();
+        }
+
         mainSoundButton.transform.DOScale(0f, 0.7f).SetEase(Ease.InSine).SetDelay(0.2f);
         Invoke("EndAssociation", 1f);
     }
