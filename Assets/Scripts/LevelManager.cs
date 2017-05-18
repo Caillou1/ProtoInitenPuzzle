@@ -4,40 +4,40 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
-    public float Time1Star;
-    public float Time2Stars;
-    public float Time3Stars;
+    public int Coup1Star;
+    public int Coup2Stars;
+    public int Coup3Stars;
 
-    private float startTime;
+    private int coups;
 
     public static LevelManager Instance;
 
 	void Start () {
         Instance = this;
+        coups = 0;
 	}
-
-    public void StartChrono()
-    {
-        startTime = Time.time;
-    }
 
     public void Win()
     {
         int nbStars = 0;
-        float time = Time.time - startTime;
 
-        if(time <= Time3Stars)
+        if(coups <= Coup3Stars)
         {
             nbStars = 3;
-        } else if(time <= Time2Stars)
+        } else if(coups <= Coup2Stars)
         {
             nbStars = 2;
-        } else if(time <= Time1Star)
+        } else if(coups <= Coup1Star)
         {
             nbStars = 1;
         }
 
-        Debug.Log("WIN " + nbStars + " STARS IN " + time + " SECONDS");
+        Debug.Log("WIN " + nbStars + " STARS");
+    }
+
+    public void AddHit()
+    {
+        coups++;
     }
 
     public void Lose()

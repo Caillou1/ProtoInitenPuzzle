@@ -28,6 +28,7 @@ public class Button : MonoBehaviour {
 
     public void PlaySoundAtEmitters()
     {
+        LevelManager.Instance.AddHit();
         int ShortestIndex = FindShortestIndex();
 
         for(int i = 0; i<LinkedSoundEmitters.Length; i++)
