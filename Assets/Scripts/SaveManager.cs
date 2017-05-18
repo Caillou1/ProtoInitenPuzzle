@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour {
+    public List<Material> AvailableInitens;
     public AudioClip[] AvailableSounds;
 
     private Material[] AssociatedMaterials;
@@ -61,5 +62,6 @@ public class SaveManager : MonoBehaviour {
     public void SetMaterial(AudioClip Sound, Material Mat)
     {
         AssociatedMaterials[FindIndex(Sound)] = Mat;
+        AvailableInitens.Remove(Mat);
     }
 }

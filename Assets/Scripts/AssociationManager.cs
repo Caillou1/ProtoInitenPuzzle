@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class AssociationManager : MonoBehaviour {
 
-    public List<Material> Initen;
+    private List<Material> Initen;
     public GameObject BaseIniten;
     public Transform CamAssociation;
     public float distFromCam;
@@ -26,6 +26,7 @@ public class AssociationManager : MonoBehaviour {
         index = 0;
         Invoke("SetUp", 1f);
         CamAssociation.GetChild(0).position += new Vector3(0, 0, distFromCam);
+        Initen = SaveManager.Instance.AvailableInitens;
     }
 
     private List<Button> ButtonArrayToList(Button[] tab)
@@ -48,6 +49,7 @@ public class AssociationManager : MonoBehaviour {
 
     public void Associate(Material m, int pos, GameObject go)
     {
+        SaveManager.Instance.SetMaterial(soundButtons[index].SoundToPlay, m);
         soundButtons[index].Mat = m;
         index++;
         spheres.Remove(go);
