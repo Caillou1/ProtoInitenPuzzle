@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class AssociationManager : MonoBehaviour {
 
@@ -14,6 +15,9 @@ public class AssociationManager : MonoBehaviour {
     public float launchDelay;
     public float rotationSpeed;
     public int sphereDisplayed;
+    public CanvasGroup canvaGroup;
+    public GameObject mainSoundButton;
+    public Image background;
     private Button [] soundButtons;
     List<GameObject> spheres = new List<GameObject>();
     AudioSource source;
@@ -36,7 +40,7 @@ public class AssociationManager : MonoBehaviour {
         if (index == soundButtons.Length)
             FinishAssociation();
 
-        if (index < soundButtons.Length)
+        if (index < soundButtons.Length -1)
         {
             Invoke("PlaySound", 1f);
             if (Initen.Count > 0)
@@ -87,14 +91,18 @@ public class AssociationManager : MonoBehaviour {
 
         foreach (GameObject go in spheres)
         {
-            go.transform.DOLocalMove(Vector3.zero, 1f).SetEase(Ease.InBack).OnComplete(EndAssociation);
+            go.transform.DOLocalMove(Vector3.zero, 1f).SetEase(Ease.InBack);
             go.transform.DOScale(0f, 0.9f).SetEase(Ease.InSine);
         }
+
+        mainSoundButton.transform.DOScale(0f, 0.7f).SetEase(Ease.InSine).SetDelay(0.2f);
+        Invoke("EndAssociation", 1f);
     }
 
     void EndAssociation()  // Après FinishAssociation, quand toutes les anims sont finies
     {
-        LevelManager.Instance.StartChrono();
         gameObject.SetActive(false);
+        canvaGroup.alpha = 1f;
+        background.DOFade(0f, 2f).SetEase(Ease.OutSine).OnComplete(LevelManager.Instance.StartChrono);
     }
 }
