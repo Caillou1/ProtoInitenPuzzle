@@ -5,12 +5,13 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour {
     public List<Material> AvailableInitens;
     public AudioClip[] AvailableSounds;
+    public Sprite[] AvailableButtons;
 
     private Material[] AssociatedMaterials;
 
     public static SaveManager Instance = null;
 
-	void Start () {
+	void Awake () {
 		if(Instance == null)
         {
             Instance = this;
@@ -23,6 +24,11 @@ public class SaveManager : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
 	}
+
+    public Sprite GetSpriteForSound(AudioClip Sound)
+    {
+        return AvailableButtons[FindIndex(Sound)];
+    }
 
     private void InitTab()
     {

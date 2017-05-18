@@ -7,6 +7,13 @@ public class Button : MonoBehaviour {
     public AudioClip SoundToPlay;
     public Material Mat;
 
+    private void Start()
+    {
+        var img = GetComponent<UnityEngine.UI.Image>();
+        var spt = SaveManager.Instance.GetSpriteForSound(SoundToPlay);
+        img.sprite = spt;
+    }
+
     public void SetMaterials()
     {
         foreach (var emitter in LinkedSoundEmitters)
