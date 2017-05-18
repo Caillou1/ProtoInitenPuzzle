@@ -49,7 +49,7 @@ public class AssociationManager : MonoBehaviour {
         }
 
         CamAssociation.GetChild(0).DORotate(new Vector3(0f, 0f, -360f), rotationSpeed, RotateMode.WorldAxisAdd).SetLoops(100).SetEase(Ease.Linear);
-        PlaySound();
+        Invoke("PlaySound", 1.5f);
     }
 
     void SpawnIniten(int pos, float delay)
@@ -61,7 +61,7 @@ public class AssociationManager : MonoBehaviour {
         clone.GetComponent<MeshRenderer>().material = Initen[m];
         Initen.RemoveAt(m);
         clone.transform.Rotate(Vector3.forward, (360 / sphereDisplayed) * pos);
-        clone.transform.DOLocalMove(clone.transform.up * distFromCenter, 3f).SetEase(Ease.OutElastic, 1f).SetDelay(delay);
+        clone.transform.DOLocalMove(CamAssociation.GetChild(0).InverseTransformDirection(clone.transform.up) * distFromCenter, 3f).SetEase(Ease.OutElastic, 1f).SetDelay(delay);
         clone.transform.localScale = Vector3.zero;
         clone.transform.DOScale(sphereSize, 1f).SetDelay(delay);
     }
