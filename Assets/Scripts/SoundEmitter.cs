@@ -69,7 +69,11 @@ public class SoundEmitter : MonoBehaviour {
                 if (canPlaySound)
                 {
                     source.PlayOneShot(Sound);
+                    Player.Instance.CanHearSound(true);
                     Player.Instance.SetDestination(tf.position);
+                } else
+                {
+                    Player.Instance.CanHearSound(false);
                 }
             }
         }

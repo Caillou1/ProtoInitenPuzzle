@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class AssociationManager : MonoBehaviour {
 
-    public List<Material> Initen;
+    private List<Material> Initen;
     public GameObject BaseIniten;
     public Transform CamAssociation;
     public float distFromCam;
@@ -15,32 +15,61 @@ public class AssociationManager : MonoBehaviour {
     public float launchDelay;
     public float rotationSpeed;
     public int sphereDisplayed;
+<<<<<<< HEAD
     public CanvasGroup canvaGroup;
     public GameObject mainSoundButton;
     public Image background;
     private Button [] soundButtons;
+=======
+    private List<Button> soundButtons;
+>>>>>>> origin/master
     List<GameObject> spheres = new List<GameObject>();
     AudioSource source;
     int index;
 
     void Start () {
-        soundButtons = GameObject.FindObjectsOfType<Button>();
+        var tab = GameObject.FindObjectsOfType<Button>();
+        soundButtons = ButtonArrayToList(tab);
         source = GetComponent<AudioSource>();
         index = 0;
         Invoke("SetUp", 1f);
         CamAssociation.GetChild(0).position += new Vector3(0, 0, distFromCam);
+        Initen = SaveManager.Instance.AvailableInitens;
+    }
+
+    private List<Button> ButtonArrayToList(Button[] tab)
+    {
+        List<Button> liste = new List<Button>();
+
+        foreach(var b in tab)
+        {
+            if(!SaveManager.Instance.IsSet(b.SoundToPlay))
+            {
+                liste.Add(b);
+            } else
+            {
+                b.Mat = SaveManager.Instance.GetMat(b.SoundToPlay);
+            }
+        }
+
+        return liste;
     }
 
     public void Associate(Material m, int pos, GameObject go)
     {
+        SaveManager.Instance.SetMaterial(soundButtons[index].SoundToPlay, m);
         soundButtons[index].Mat = m;
         index++;
         spheres.Remove(go);
 
-        if (index == soundButtons.Length)
+        if (index == soundButtons.Count)
             FinishAssociation();
+<<<<<<< HEAD
 
         if (index < soundButtons.Length -1)
+=======
+        if (index < soundButtons.Count)
+>>>>>>> origin/master
         {
             Invoke("PlaySound", 1f);
             if (Initen.Count > 0)
@@ -78,7 +107,7 @@ public class AssociationManager : MonoBehaviour {
     }
 
     void PlaySound () {
-        if (soundButtons[index].SoundToPlay != null)
+        if (index < soundButtons.Count && soundButtons[index].SoundToPlay != null)
             source.PlayOneShot(soundButtons[index].SoundToPlay);
 	}
 
