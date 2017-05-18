@@ -9,6 +9,8 @@ public class Animal : MonoBehaviour {
     private Transform tf;
     private NavMeshAgent navMeshAgent;
 
+    public float Portee = 5;
+
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -20,11 +22,11 @@ public class Animal : MonoBehaviour {
         navMeshAgent.SetDestination(Destination);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (ChasePlayer && other.CompareTag("Player"))
+        float distance = Vector3.Distance(tf.position, Player.Instance.GetPosition());
+        if (ChasePlayer && distance <= Portee)
         {
-            float distance = Vector3.Distance(tf.position, Player.Instance.GetPosition());
             var hits = Physics.RaycastAll(tf.position, (Player.Instance.GetPosition() - tf.position).normalized, distance);
             bool canAttack = true;
 
