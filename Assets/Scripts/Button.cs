@@ -11,6 +11,10 @@ public class Button : MonoBehaviour {
     {
         foreach (var emitter in LinkedSoundEmitters)
         {
+            if(emitter == null)
+            {
+                Debug.Log("prob");
+            }
             emitter.SetMaterial(Mat);
         }
     }
