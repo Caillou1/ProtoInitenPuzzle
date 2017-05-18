@@ -10,7 +10,8 @@ public class InitenClick : MonoBehaviour {
     public bool beingKilled;
 
 	public void OnClick () {
-        transform.DOScale(0, 0.5f).SetEase(Ease.InBack).OnComplete(Kill);
+        if (!beingKilled)
+            transform.DOScale(0, 0.5f).SetEase(Ease.InBack).OnComplete(Kill);
 	}
 
     void Kill()

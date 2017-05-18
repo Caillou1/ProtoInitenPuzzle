@@ -30,6 +30,10 @@ public class AssociationManager : MonoBehaviour {
     {
         var tab = GameObject.FindObjectsOfType<Button>();
         soundButtons = ButtonArrayToList(tab);
+
+        if (soundButtons.Count == 0)
+            SkipAssociation();
+
         source = GetComponent<AudioSource>();
         index = 0;
         Invoke("SetUp", 1f);
@@ -80,6 +84,8 @@ public class AssociationManager : MonoBehaviour {
 
     void SetUp()
     {
+        mainSoundButton.SetActive(true);
+
         for (int i = 0; i < sphereDisplayed; i++)
         {
             if (Initen.Count <= 0)
@@ -120,10 +126,17 @@ public class AssociationManager : MonoBehaviour {
 
         foreach (GameObject go in spheres)
         {
+            go.GetComponent<InitenClick>().beingKilled = true;
             go.transform.DOLocalMove(Vector3.zero, 1f).SetEase(Ease.InBack);
             go.transform.DOScale(0f, 0.9f).SetEase(Ease.InSine);
         }
 
+        mainSoundButton.transform.DOScale(0f, 0.7f).SetEase(Ease.InSine).SetDelay(0.2f);
+        Invoke("EndAssociation", 1f);
+    }
+
+    void SkipAssociation()
+    {
         mainSoundButton.transform.DOScale(0f, 0.7f).SetEase(Ease.InSine).SetDelay(0.2f);
         Invoke("EndAssociation", 1f);
     }
