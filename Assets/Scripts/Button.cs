@@ -11,6 +11,10 @@ public class Button : MonoBehaviour {
     {
         foreach (var emitter in LinkedSoundEmitters)
         {
+            if(emitter == null)
+            {
+                Debug.Log("prob");
+            }
             emitter.SetMaterial(Mat);
         }
     }
@@ -26,6 +30,11 @@ public class Button : MonoBehaviour {
             else
                 LinkedSoundEmitters[i].PlaySound(SoundToPlay, false);
         }
+    }
+
+    public void TestSound()
+    {
+        SoundManager.Instance.TestSound(SoundToPlay);
     }
 
     public int FindShortestIndex()
