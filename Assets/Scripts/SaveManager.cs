@@ -10,7 +10,7 @@ public class SaveManager : MonoBehaviour {
 
     public static SaveManager Instance = null;
 
-	void Start () {
+	void Awake () {
 		if(Instance == null)
         {
             Instance = this;

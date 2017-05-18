@@ -15,14 +15,13 @@ public class AssociationManager : MonoBehaviour {
     public float launchDelay;
     public float rotationSpeed;
     public int sphereDisplayed;
-<<<<<<< HEAD
+
     public CanvasGroup canvaGroup;
     public GameObject mainSoundButton;
     public Image background;
-    private Button [] soundButtons;
-=======
+
     private List<Button> soundButtons;
->>>>>>> origin/master
+
     List<GameObject> spheres = new List<GameObject>();
     AudioSource source;
     int index;
@@ -64,12 +63,9 @@ public class AssociationManager : MonoBehaviour {
 
         if (index == soundButtons.Count)
             FinishAssociation();
-<<<<<<< HEAD
 
-        if (index < soundButtons.Length -1)
-=======
         if (index < soundButtons.Count)
->>>>>>> origin/master
+
         {
             Invoke("PlaySound", 1f);
             if (Initen.Count > 0)
