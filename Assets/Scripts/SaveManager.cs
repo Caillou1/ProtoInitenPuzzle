@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour {
     public List<Material> AvailableInitens;
@@ -25,6 +26,11 @@ public class SaveManager : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
 	}
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene("MainMenu");
+    }
 
     public Sprite GetSpriteForSound(AudioClip Sound)
     {
