@@ -20,11 +20,19 @@ public class Player : MonoBehaviour {
 
         CanHear = tf.FindChild("Canvas").FindChild("CanHear").GetComponent<Image>();
         CantHear = tf.FindChild("Canvas").FindChild("CantHear").GetComponent<Image>();
-        //CanHear.enabled = false;
+        CanHear.enabled = false;
         CantHear.enabled = false;
 
         navMeshAgent = GetComponent<NavMeshAgent>();
 	}
+
+    void Update()
+    {
+        CanHear.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        CanHear.transform.position = new Vector3(CanHear.transform.position.x, CanHear.transform.position.y + 50, CanHear.transform.position.z);
+        CantHear.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        CantHear.transform.position = new Vector3(CantHear.transform.position.x, CantHear.transform.position.y + 50, CantHear.transform.position.z);
+    }
 
     public void SetDestination(Vector3 Destination)
     {
