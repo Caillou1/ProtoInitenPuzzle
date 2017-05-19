@@ -18,7 +18,8 @@ public class AssociationManager : MonoBehaviour {
 
     public CanvasGroup canvaGroup;
     public GameObject mainSoundButton;
-    public Image background;
+    public Image buttonBackground;
+    public Image associationBackground;
 
     private List<Button> soundButtons;
 
@@ -29,18 +30,20 @@ public class AssociationManager : MonoBehaviour {
     void Start()
     {
         var tab = GameObject.FindObjectsOfType<Button>();
-
+        mainSoundButton.transform.localScale = Vector3.zero;
         soundButtons = ButtonArrayToList(tab, false);
 
         if (soundButtons.Count == 0)
         {
             soundButtons = ButtonArrayToList(tab, true);
             SkipAssociation();
+            return;
         }
 
         source = GetComponent<AudioSource>();
         index = 0;
-        Invoke("SetUp", 1f);
+        mainSoundButton.transform.parent.gameObject.SetActive(true);
+        associationBackground.DOFade(0f, 2f).SetEase(Ease.OutSine).OnComplete(SetUp);
         CamAssociation.GetChild(0).position += CamAssociation.transform.forward * distFromCam;
 
         foreach (Material m in SaveManager.Instance.AvailableInitens)
@@ -88,7 +91,7 @@ public class AssociationManager : MonoBehaviour {
 
     void SetUp()
     {
-        mainSoundButton.transform.parent.gameObject.SetActive(true);
+        mainSoundButton.transform.DOScale(1, 1f).SetEase(Ease.OutElastic, 1.5f).SetDelay(2.5f);
 
         for (int i = 0; i < sphereDisplayed; i++)
         {
@@ -98,7 +101,7 @@ public class AssociationManager : MonoBehaviour {
         }
 
         CamAssociation.GetChild(0).DOLocalRotate(new Vector3(0f, 0f, -360f), rotationSpeed, RotateMode.WorldAxisAdd).SetLoops(100).SetEase(Ease.Linear);
-        Invoke("PlaySound", 1.5f);
+        Invoke("PlaySound", 2.5f);
     }
 
     void SpawnIniten(int pos, float delay)
@@ -154,6 +157,6 @@ public class AssociationManager : MonoBehaviour {
     {
         gameObject.SetActive(false);
         canvaGroup.alpha = 1f;
-        background.DOFade(0f, 2f).SetEase(Ease.OutSine);
+        buttonBackground.DOFade(0f, 2f).SetEase(Ease.OutSine);
     }
 }
