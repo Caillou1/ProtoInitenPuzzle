@@ -64,6 +64,7 @@ public class AssociationManager : MonoBehaviour {
             } else
             {
                 b.Mat = SaveManager.Instance.GetMat(b.SoundToPlay);
+                b.SetMaterials();
             }
         }
 
