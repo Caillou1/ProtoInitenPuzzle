@@ -41,7 +41,7 @@ public class AssociationManager : MonoBehaviour {
         source = GetComponent<AudioSource>();
         index = 0;
         Invoke("SetUp", 1f);
-        CamAssociation.GetChild(0).position += new Vector3(0, 0, distFromCam);
+        CamAssociation.GetChild(0).position += CamAssociation.transform.forward * distFromCam;
 
         foreach (Material m in SaveManager.Instance.AvailableInitens)
         {
@@ -97,7 +97,7 @@ public class AssociationManager : MonoBehaviour {
             SpawnIniten(i, launchDelay * i);
         }
 
-        CamAssociation.GetChild(0).DORotate(new Vector3(0f, 0f, -360f), rotationSpeed, RotateMode.WorldAxisAdd).SetLoops(100).SetEase(Ease.Linear);
+        CamAssociation.GetChild(0).DOLocalRotate(new Vector3(0f, 0f, -360f), rotationSpeed, RotateMode.WorldAxisAdd).SetLoops(100).SetEase(Ease.Linear);
         Invoke("PlaySound", 1.5f);
     }
 
