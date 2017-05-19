@@ -11,9 +11,14 @@ public class BulleBehaviour : MonoBehaviour {
 	
 	void Update ()
     {
-        var direction = (Camera.main.transform.position - tf.position).normalized;
+        /*var direction = (Camera.main.transform.position - tf.position).normalized;
         var lookRotation = Quaternion.LookRotation(direction);
         lookRotation = Quaternion.Euler(lookRotation.eulerAngles.x, lookRotation.eulerAngles.y, tf.rotation.eulerAngles.z);
-        //tf.rotation = lookRotation;
+        tf.rotation = lookRotation;
+        Vector3 v = Camera.main.transform.position - tf.position;
+        v.x = 0;
+        v.y = 0;
+        v.z = 0;
+        tf.LookAt(Camera.main.transform.position - v);*/
     }
 }
